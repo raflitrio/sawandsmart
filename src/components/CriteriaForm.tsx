@@ -7,6 +7,7 @@ import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Trash2, Plus } from 'lucide-react';
 import { Badge } from './ui/badge';
+import { Toaster, toast } from 'sonner';
 
 interface CriteriaFormProps {
   criteria: Criterion[];
@@ -23,7 +24,7 @@ export function CriteriaForm({ criteria, onUpdateCriteria }: CriteriaFormProps) 
 
   const handleAddCriterion = () => {
     if (!newCriterion.name || !newCriterion.weight) {
-      alert('Nama dan bobot kriteria harus diisi');
+      toast.warning('Nama dan bobot kriteria harus diisi');
       return;
     }
 
@@ -53,6 +54,7 @@ export function CriteriaForm({ criteria, onUpdateCriteria }: CriteriaFormProps) 
 
   return (
     <div className="space-y-6">
+      <Toaster richColors position="top-center" />
       <Card className="bg-white/80 backdrop-blur shadow-lg border-slate-200/60">
         <CardHeader>
           <CardTitle className="text-slate-900">Kelola Kriteria</CardTitle>

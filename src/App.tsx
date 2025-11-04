@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './components/ui/card';
 import { Button } from './components/ui/button';
 import { GraduationCap, Calculator, FileText, BarChart3, RefreshCw, Trash2, Award } from 'lucide-react';
+import { Toaster, toast } from 'sonner';
 import { Badge } from './components/ui/badge';
 
 export default function App() {
@@ -20,29 +21,24 @@ export default function App() {
   const [selectedMethod, setSelectedMethod] = useState<CalculationMethod>('SAW');
   const [results, setResults] = useState<CalculationResult[]>([]);
 
-const handleCalculate = () => {
-  if (criteria.length === 0) {
-    alert('Tambahkan kriteria terlebih dahulu');
-    return;
-  }
+  const handleCalculate = () => {
+    if (criteria.length === 0) {
+      toast.warning('Tambahkan kriteria terlebih dahulu');
+      return;
+    }
 
-  if (candidates.length === 0) {
-    alert('Tambahkan kandidat terlebih dahulu');
-    return;
-  }
+    if (candidates.length === 0) {
+      toast.warning('Tambahkan kandidat terlebih dahulu');
+      return;
+    }
 
-  try {
     const calculatedResults = selectedMethod === 'SAW'
       ? calculateSAW(criteria, candidates)
       : calculateSMART(criteria, candidates);
 
     setResults(calculatedResults);
-    alert('Perhitungan berhasil! Silakan cek hasilnya di menu Hasil.');
-  } catch (error) {
-    console.error('Error saat menghitung:', error);
-    alert('Terjadi kesalahan saat perhitungan. Cek konsol browser untuk detail error.');
-  }
-};
+    toast.success('Perhitungan berhasil! Silakan cek hasilnya di menu Hasil.');
+  };
 
   const handleResetData = () => {
     if (confirm('Reset semua data ke default?')) {
@@ -63,7 +59,9 @@ const handleCalculate = () => {
   const totalWeight = criteria.reduce((sum, c) => sum + c.weight, 0);
 
   return (
+
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <Toaster richColors position="top-center" />
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-lg border-b border-slate-200/60 shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 md:py-6">

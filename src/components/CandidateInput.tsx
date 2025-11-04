@@ -6,6 +6,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Trash2, Plus, UserPlus } from 'lucide-react';
 import { Badge } from './ui/badge';
+import { Toaster, toast } from 'sonner';
 
 interface CandidateInputProps {
   candidates: Candidate[];
@@ -21,14 +22,14 @@ export function CandidateInput({ candidates, criteria, onUpdateCandidates }: Can
 
   const handleAddCandidate = () => {
     if (!newCandidate.name) {
-      alert('Nama kandidat harus diisi');
+      toast.warning('Nama kandidat harus diisi');
       return;
     }
 
     // Validasi semua nilai kriteria sudah diisi
     const missingCriteria = criteria.filter(c => !newCandidate.values?.[c.id]);
     if (missingCriteria.length > 0) {
-      alert('Semua nilai kriteria harus diisi');
+      toast.warning('Semua nilai kriteria harus diisi');
       return;
     }
 
@@ -58,6 +59,7 @@ export function CandidateInput({ candidates, criteria, onUpdateCandidates }: Can
 
   return (
     <div className="space-y-6">
+      <Toaster richColors position="top-center" />
       <Card className="bg-white/80 backdrop-blur shadow-lg border-slate-200/60">
         <CardHeader>
           <CardTitle className="text-slate-900">Kelola Kandidat</CardTitle>
