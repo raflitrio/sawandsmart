@@ -36,6 +36,7 @@ export default function App() {
       : calculateSMART(criteria, candidates);
 
     setResults(calculatedResults);
+    alert('Perhitungan berhasil! Silakan cek hasilnya di menu Hasil.');
   };
 
   const handleResetData = () => {
