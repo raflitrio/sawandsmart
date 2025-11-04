@@ -20,24 +20,29 @@ export default function App() {
   const [selectedMethod, setSelectedMethod] = useState<CalculationMethod>('SAW');
   const [results, setResults] = useState<CalculationResult[]>([]);
 
-  const handleCalculate = () => {
-    if (criteria.length === 0) {
-      alert('Tambahkan kriteria terlebih dahulu');
-      return;
-    }
+const handleCalculate = () => {
+  if (criteria.length === 0) {
+    alert('Tambahkan kriteria terlebih dahulu');
+    return;
+  }
 
-    if (candidates.length === 0) {
-      alert('Tambahkan kandidat terlebih dahulu');
-      return;
-    }
+  if (candidates.length === 0) {
+    alert('Tambahkan kandidat terlebih dahulu');
+    return;
+  }
 
+  try {
     const calculatedResults = selectedMethod === 'SAW'
       ? calculateSAW(criteria, candidates)
       : calculateSMART(criteria, candidates);
 
     setResults(calculatedResults);
     alert('Perhitungan berhasil! Silakan cek hasilnya di menu Hasil.');
-  };
+  } catch (error) {
+    console.error('Error saat menghitung:', error);
+    alert('Terjadi kesalahan saat perhitungan. Cek konsol browser untuk detail error.');
+  }
+};
 
   const handleResetData = () => {
     if (confirm('Reset semua data ke default?')) {
